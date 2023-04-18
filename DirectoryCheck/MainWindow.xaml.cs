@@ -34,6 +34,41 @@ namespace DirectoryCheck
             }
             return dllFiles;
         }
+
+        public static bool IsDllExcluded(string filePath, List<string> excludedDlls)
+        {
+            foreach (string excludedDll in excludedDlls)
+            {
+                if (filePath.EndsWith(excludedDll, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static string GetAverageVersion(List<string> versionList)
+        {
+            int totalVersions = 0;
+            int totalMajor = 0;
+            int totalMinor = 0;
+            int totalBuild = 0;
+            int totalRevision = 0;
+            foreach (string versionString in versionList)
+            {
+                Version version = new Version(versionString);
+                totalVersions++;
+                totalMajor += version.Major;
+                totalMinor += version.Minor;
+                totalBuild += version.Build;
+                totalRevision += version.Revision;
+            }
+            int averageMajor = totalMajor / totalVersions;
+            int averageMinor = totalMinor / totalVersions;
+            int averageBuild = totalBuild / totalVersions;
+            int averageRevision = totalRevision / totalVersions;
+            return $"{averageMajor}.{averageMinor}.{averageBuild}.{averageRevision}";
+        }
     }
 
 
