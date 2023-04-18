@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using Path = System.IO.Path;
+using System.Diagnostics;
 
 namespace DirectoryCheck
 {
@@ -35,11 +36,32 @@ namespace DirectoryCheck
         }
     }
 
+
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static string GetDllVersion(string filePath)
+        {
+            string version = "unknown";
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(filePath);
+                    version = fileVersionInfo.FileVersion;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error getting version for file {filePath}: {ex.Message}");
+                }
+            }
+            return version;
+        }
+
+
         public MainWindow()
         {
             InitializeComponent();
