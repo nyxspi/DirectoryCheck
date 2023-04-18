@@ -7,9 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Height="NaN" Margin="0,0,0,-6" Width="NaN" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
-        <Button x:Name="Check_DDL_Versions" Content="Check Directories" HorizontalAlignment="Left" Margin="428,309,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <TextBox HorizontalAlignment="Left" Margin="122,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="426" Height="218"/>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="428,41,0,0" VerticalAlignment="Top"/>
+        <Button Content="Check DLL Versions" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="150" Click="Button_Click"/>
+        <TextBox x:Name="txtResults" HorizontalAlignment="Left" Height="230" Margin="10,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480"/>
+
+        <Label Content="Label" HorizontalAlignment="Left" Margin="431,2,0,0" VerticalAlignment="Top"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="29,309,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+        <Button x:Name="checkVersionButton" Content="Check DLL Versions" Click="checkVersionButton_Click" />
+
 
     </Grid>
 </Window>
