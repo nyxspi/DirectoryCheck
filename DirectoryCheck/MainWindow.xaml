@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:DirectoryCheck"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Height="NaN" Margin="-318,-200,-242,-204" Width="NaN">
-        <Button x:Name="Check_DDL_Versions" Content="Button" HorizontalAlignment="Left" Margin="428,309,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+    <Grid Height="NaN" Margin="0,0,0,-6" Width="NaN" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+        <Button x:Name="Check_DDL_Versions" Content="Check Directories" HorizontalAlignment="Left" Margin="428,309,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <TextBox HorizontalAlignment="Left" Margin="122,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="426" Height="218"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="428,41,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

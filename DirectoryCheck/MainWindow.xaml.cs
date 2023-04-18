@@ -12,9 +12,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using Path = System.IO.Path;
 
 namespace DirectoryCheck
 {
+
+    public static class DllVersionChecker
+    {
+        public static List<string> GetDllFiles(string directoryPath)
+        {
+            List<string> dllFiles = new List<string>();
+            string[] files = Directory.GetFiles(directoryPath);
+            foreach (string file in files)
+            {
+                if (Path.GetExtension(file).ToLower() == ".dll")
+                {
+                    dllFiles.Add(file);
+                }
+            }
+            return dllFiles;
+        }
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -29,5 +49,7 @@ namespace DirectoryCheck
         {
 
         }
+
+
     }
 }
