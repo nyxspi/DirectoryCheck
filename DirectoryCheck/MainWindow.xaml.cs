@@ -16,9 +16,17 @@ using System.IO;
 using Path = System.IO.Path;
 using System.Diagnostics;
 using static DirectoryCheck.DataGrid;
+using System.Reflection;
+
 
 namespace DirectoryCheck
 {
+    public class DllInfo
+{
+    public string FilePath { get; set; }
+    public string Version { get; set; }
+    public string Status { get; set; }
+}
 
     public static class DllVersionChecker
 {
@@ -47,6 +55,51 @@ namespace DirectoryCheck
         }
         return false;
     }
+
+        public static List<string> GetOutliers(List<string> dllFiles)
+        {
+            List<string> outliers = new List<string>();
+            List<Version> versions = new List<Version>();
+            foreach (string file in dllFiles)
+            {
+                try
+                {
+                    Version version = AssemblyName.GetAssemblyName(file).Version;
+                    versions.Add(version);
+                }
+                catch (Exception ex)
+                {
+                    // Ignore the exception and continue with the next file
+                    Console.WriteLine($"Error getting version for file {file}: {ex.Message}");
+                }
+            }
+
+            if (versions.Count > 0)
+            {
+                Version averageVersion = new Version((int)Math.Round(versions.Average(v => v.Major)), (int)Math.Round(versions.Average(v => v.Minor)), (int)Math.Round(versions.Average(v => v.Build)), (int)Math.Round(versions.Average(v => v.Revision)));
+
+
+                foreach (string file in dllFiles)
+                {
+                    try
+                    {
+                        Version version = AssemblyName.GetAssemblyName(file).Version;
+                        if (version < averageVersion)
+                        {
+                            outliers.Add(file);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Ignore the exception and continue with the next file
+                        Console.WriteLine($"Error getting version for file {file}: {ex.Message}");
+                    }
+                }
+            }
+
+            return outliers;
+        }
+    
 
     public static string GetAverageVersion(List<string> versionList)
     {
@@ -132,9 +185,9 @@ namespace DirectoryCheck
                 dllInfoList.Add(new DllInfo { FilePath = dllFile, Version = version, Status = status });
             }
 
-            DllInfoWindow dllInfoWindow = new DllInfoWindow();
+            /*DllInfoWindow dllInfoWindow = new DllInfoWindow();
             dllInfoWindow.PopulateDllDataGrid(dllInfoList);
-            dllInfoWindow.ShowDialog();
+            dllInfoWindow.ShowDialog();*/
         }
 
 

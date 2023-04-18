@@ -11,8 +11,6 @@
         <TextBox x:Name="txtResults" HorizontalAlignment="Left" Height="230" Margin="10,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="480"/>
 
         <Label Content="Label" HorizontalAlignment="Left" Margin="431,2,0,0" VerticalAlignment="Top"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="29,309,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
-        <Button x:Name="checkVersionButton" Content="Check DLL Versions" Click="checkVersionButton_Click" />
 
 
     </Grid>

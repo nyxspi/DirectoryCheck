@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using static DirectoryCheck.DataGrid;
 
 namespace DirectoryCheck
 {
@@ -27,13 +27,14 @@ namespace DirectoryCheck
 
         public class DllInfo
         {
+            public static List<DllInfo> ItemsSource { get; internal set; }
             public string FileName { get; set; }
             public Version Version { get; set; }
         }
 
         public void PopulateDllDataGrid(List<DllInfo> dllInfoList)
         {
-            DDlInfo.ItemsSource = dllInfoList;
+            DllInfo.ItemsSource = dllInfoList;
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
