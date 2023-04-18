@@ -17,13 +17,48 @@ using Path = System.IO.Path;
 using System.Diagnostics;
 using static DirectoryCheck.DataGrid;
 using System.Reflection;
+using DirectoryCheck;
 
 
 namespace DirectoryCheck
 {
+    public partial class DllInfoWindow : Window
+    {
+        private readonly List<DllInfo> _dllInfoList;
+
+        public DllInfoWindow(List<DllInfo> dllInfoList)
+        {
+            InitializeComponent();
+
+            _dllInfoList = dllInfoList;
+
+            // Bind the list of DllInfo objects to the DataGrid
+            DllInfo.ItemsSource = _dllInfoList;
+        }
+
+        public DllInfoWindow()
+        {
+        }
+
+        private void InitializeComponent()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        internal object PopulateDllDataGrid(List<DllInfo> dllInfoList)
+        {
+            throw new NotImplementedException();
+        }
+    }
     public class DllInfo
 {
-    public string FilePath { get; set; }
+        public static List<DllInfo> ItemsSource { get; internal set; }
+        public string FilePath { get; set; }
     public string Version { get; set; }
     public string Status { get; set; }
 }
@@ -160,9 +195,19 @@ namespace DirectoryCheck
         {
             string directoryPath = @"C:\MyProject\Release";
             List<string> excludedDlls = new List<string> { "ThirdParty.dll", "AnotherThirdParty.dll" };
-
-            List<string> dllFiles = DllVersionChecker.GetDllFiles(directoryPath);
+            List<string> dllFiles = null;
             List<DllInfo> dllInfoList = new List<DllInfo>();
+
+            try
+            {
+                dllFiles = DllVersionChecker.GetDllFiles(directoryPath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error getting DLL files: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             foreach (string dllFile in dllFiles)
             {
                 if (DllVersionChecker.IsDllExcluded(dllFile, excludedDlls))
@@ -185,11 +230,17 @@ namespace DirectoryCheck
                 dllInfoList.Add(new DllInfo { FilePath = dllFile, Version = version, Status = status });
             }
 
-            /*DllInfoWindow dllInfoWindow = new DllInfoWindow();
-            dllInfoWindow.PopulateDllDataGrid(dllInfoList);
-            dllInfoWindow.ShowDialog();*/
+            try
+            {
+                DllInfoWindow dllInfoWindow = new DllInfoWindow();
+                object value = dllInfoWindow.PopulateDllDataGrid(dllInfoList);
+                dllInfoWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error displaying DLL info: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
-
+    }
 
     }
-}
